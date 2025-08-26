@@ -1,5 +1,32 @@
 <?php
 
+require_once 'data/users.php';
+
+
+function createGallery($array, $sexe = "all", $total = "all")
+{
+    // je mets un varm dump pour controler mes params
+    // var_dump($array, $sexe, $total);
+
+    // Je définis une variable max qui vaut 0 (car a chaque fois que je vais mettre une photo, je vais incrémenter mon max de plus en plus)
+    $max = 0;
+
+    foreach ($array as $person) {
+
+        if ($person['sexe'] != $sexe && $sexe != 'all') {
+            continue;
+        }
+
+        if ($max == $total && $max != 'all') {
+            break;
+        }
+
+        $max++;
+    }
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -17,9 +44,63 @@
 
 <body class="bg-light d-flex flex-column min-vh-100">
 
-    <h1 class="text-center py-4 bg-dark text-white">Custom Gallery</h1>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-primary">Gallerie Femme 10</button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-primary">Gallerie Femme 5</button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-primary">Gallerie homme 5</button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-primary">Toutes les photos</button>
+                        </li>
+
+        </nav>
+
+    </header>
+
+
 
     <main class="container py-4">
+
+
+        <div class="card" style="width: 18rem;">
+            <img src="assets/img/photo_01.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example</p>
+                <p class="card-text">Some quick example</p>
+            </div>
+        </div>
+
+        <!-- FOREACH pour afficher les photos des gens -->
+        <?php
+
+        createGallery($users, 'Femme', 10);
+
+        createGallery($users, 'Femme', 5);
+
+        createGallery($users, 'Homme', 5);
+
+        createGallery($users);
+
+        foreach ($users as $u): ?>
+            <div>
+                <div><img src="" alt="photo des gens"></div>
+            </div>
+
+        <?php endforeach ?>
 
     </main>
 
